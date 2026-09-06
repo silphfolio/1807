@@ -107,8 +107,11 @@ select.hv-coffee:hover,select.hv-sky:hover{background-image:none}
 .bar-in .btn{height:36px;box-sizing:border-box;padding-top:0;padding-bottom:0}
 .sel-wrap{position:relative;display:block}
 .flock{position:absolute;right:29px;top:50%;transform:translateY(-50%);border:0;background:none;
-  padding:0;line-height:0;color:var(--ink-3);cursor:pointer;display:flex}
-.flock.on{color:var(--ink)}
+  padding:0;line-height:0;color:var(--ink-3);opacity:.32;cursor:pointer;display:flex}
+.flock:hover,.flock:focus-visible{opacity:.7}
+/* a locked value stays clearly marked, just not loud */
+.flock.on{color:var(--ink);opacity:.6}
+.flock.on:hover{opacity:.85}
 .sel-wrap select{padding-right:50px}
 .rec-note{flex-basis:100%;width:100%;margin:4px 0 0;font-size:13.5px;color:var(--ink-2)}
 select:hover,button.btn:hover:not(:disabled){border-color:var(--seam)}
