@@ -24,12 +24,12 @@
   src:url('fonts/ibm-plex-mono-500.woff2') format('woff2')}
 
 :root{
-  --ink:#2a211c; --ink-2:#5c5049; --ink-3:#8b7f75;
-  --paper:#f7f3e7; --well:#fffdf6; --line:#ded5c2; --seam:#b0a493;
-  --s11-fill:#303994; --s11-edge:#1c2263;   /* 1x1  deep blue   */
-  --s12-fill:#d7e021; --s12-edge:#8d9411;   /* 1x2  lime        */
-  --s21-fill:#f9982f; --s21-edge:#b2620c;   /* 2x1  orange      */
-  --s22-fill:#a9d6f3; --s22-edge:#4d87ab;   /* 2x2  pale blue   */
+  --ink:#2a211c; --ink-2:#4a5560; --ink-3:#7d8894;
+  --paper:#eceef0; --well:#ffffff; --line:#c9ced4; --seam:#9aa3ac;
+  --s11-fill:#303994; --s11-edge:#1c2263;   /* 1x1 / card */
+  --s12-fill:#709fdb; --s12-edge:#3a6ba8;   /* 1x2        */
+  --s21-fill:#93c5ec; --s21-edge:#4e8ab8;   /* 2x1        */
+  --s22-fill:#a9d6f3; --s22-edge:#5f9cc4;   /* 2x2        */
   --focus:#303994; --warn:#a33a26;
   --c:20px; --r:28px; --gap:3px; --gut:6px; --pad:9px;
 }
@@ -119,7 +119,7 @@ button.btn:disabled{color:var(--ink-3);opacity:.55;cursor:default}
 button.btn.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
 button.btn.primary:hover:not(:disabled){background:#000}
 
-.bar{position:sticky;top:0;z-index:20;background:rgba(247,243,231,.94);
+.bar{position:sticky;top:0;z-index:20;background:rgba(236,238,240,.94);
   backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 .bar.unstick{position:static;backdrop-filter:none;background:transparent}
 .bar-in{display:flex;flex-wrap:wrap;gap:12px 14px;align-items:flex-end;padding:12px 22px;max-width:1180px;margin:0 auto}
@@ -157,7 +157,7 @@ figure:hover .page,figure:focus-visible .page{border-color:var(--ink)}
 .pick{display:flex;gap:8px;max-width:100%;overflow-x:auto;padding:2px 2px 6px;
   overscroll-behavior-x:contain}
 .pick button{flex:none;width:42px;aspect-ratio:5/7;border:1px solid var(--line);
-  border-radius:3px;background:#ece5d4 center/cover no-repeat;cursor:pointer;padding:0}
+  border-radius:3px;background:#dfe3e7 center/cover no-repeat;cursor:pointer;padding:0}
 .pick button:hover{border-color:var(--ink)}
 .stage-ctl select{width:auto}
 figcaption{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--ink-3);
@@ -276,7 +276,7 @@ figcaption b{color:var(--ink-2);font-weight:400}
 #clear-images{margin-top:12px;width:100%}
 @media (max-width:1100px){.tray{--trayh:208px}}
 .chip{position:relative;border:1px solid var(--line);border-radius:3px;overflow:hidden;
-  aspect-ratio:5/7;background:#ece5d4 center/cover no-repeat;cursor:grab}
+  aspect-ratio:5/7;background:#dfe3e7 center/cover no-repeat;cursor:grab}
 .chip.sel{outline:3px solid var(--ink);outline-offset:1px}
 .chip .x{position:absolute;top:2px;right:2px;width:16px;height:16px;line-height:14px;
   border:0;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;font-size:11px;cursor:pointer;padding:0}
@@ -315,6 +315,7 @@ footer{color:var(--ink-3);font-size:12.5px;padding:0 0 50px}
   .ptile b{position:absolute;left:0;bottom:-4.2mm;font-family:monospace;font-size:2.6mm;
     font-weight:400;color:#666}
   .pcut{position:absolute;inset:0;outline:0.2mm dashed #999;outline-offset:0}
+  .psheet-logo{position:absolute;right:0;bottom:0;width:32mm;height:auto;opacity:.85}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
@@ -379,7 +380,7 @@ footer{color:var(--ink-3);font-size:12.5px;padding:0 0 50px}
           <dt>Default</dt>
           <dd>Returns to the recommended starting settings for the binder you have chosen, the same ones applied when you switch binder size.</dd>
           <dt>Colours</dt>
-          <dd>Every pocket holds an art insert, coloured by size: blue for 1×1, lime for 1×2, orange for 2×1 and pale blue for 2×2. Dashed lines mark the binder stitching.</dd>
+          <dd>Every pocket holds an art insert, coloured by size, from deep blue for a single pocket through to the palest blue for a 2×2. Dashed lines mark the binder stitching.</dd>
           <dt>Opening a layout</dt>
           <dd>Click anywhere on a layout, or its Use button, to open it in the Personalise tab and drop your own images in.</dd>
           <dt>Return to the top</dt>
@@ -1703,6 +1704,29 @@ document.getElementById('tray').addEventListener('dragstart',function(ev){
   ev.dataTransfer.setData('text/plain',c.dataset.id);
 });
 
+/* Brand marks for exports. Both are optional: if the file is missing the export
+   simply goes out without it rather than failing. */
+var brandImg=new Image(), markImg=new Image();
+var brandReady=false, markReady=false;
+brandImg.onload=function(){brandReady=true}; brandImg.src='export-logo.png';
+markImg.onload=function(){markReady=true};  markImg.src='watermark.png';
+
+function stampWatermark(ctx,cw,ch){
+  if(!markReady||!markImg.naturalWidth) return;
+  var sc=Math.min(cw/markImg.naturalWidth, ch/markImg.naturalHeight)*0.92;
+  var w=markImg.naturalWidth*sc, h=markImg.naturalHeight*sc;
+  ctx.save(); ctx.globalAlpha=0.20;
+  ctx.drawImage(markImg,(cw-w)/2,(ch-h)/2,w,h);
+  ctx.restore();
+}
+function stampLogo(ctx,cw,ch){
+  if(!brandReady||!brandImg.naturalWidth) return;
+  var w=cw*0.17, h=w*brandImg.naturalHeight/brandImg.naturalWidth, m=cw*0.022;
+  ctx.save(); ctx.globalAlpha=0.85;
+  ctx.drawImage(brandImg,cw-w-m,ch-h-m,w,h);
+  ctx.restore();
+}
+
 /* PNG export, sized so every 1x1 pocket prints at exactly 63 x 88 mm.
    Dimensions are held in millimetres and converted at the chosen resolution,
    and a pHYs chunk is written into the file so print software honours it. */
@@ -1738,8 +1762,8 @@ var SHEETS={a4:{w:210,h:297,label:'A4',css:'A4'},
             letter:{w:215.9,h:279.4,label:'US Letter',css:'Letter'}};
 var PMARGIN=10, PGAP=4, INSERT={w:68,h:94,bridge:4};
 /* fill and edge colours by insert size */
-var SIZECOL={'11':['#303994','#1c2263'],'12':['#d7e021','#8d9411'],
-             '21':['#f9982f','#b2620c'],'22':['#a9d6f3','#4d87ab']};
+var SIZECOL={'11':['#303994','#1c2263'],'12':['#709fdb','#3a6ba8'],
+             '21':['#93c5ec','#4e8ab8'],'22':['#a9d6f3','#5f9cc4']};
 function colOf(q){ return SIZECOL[''+q.h+q.w]||SIZECOL['11'] }
 
 function drawFit(ctx,el,fit,x,y,w,h,fx,fy){
@@ -1800,7 +1824,8 @@ function doPrint(key){
             'mm;height:'+it.t.h+'mm"><img src="'+it.t.url+'" alt=""><span class="pcut"></span>'+
             '<b>'+it.t.w+'\u00d7'+it.t.h+'mm</b></div>';
     }
-    html+='</div>';
+    html+='<img class="psheet-logo" src="export-logo.png" alt="" '+
+          'onerror="this.remove()"></div>';
   }
   document.getElementById('print-style').textContent=
     '@page{size:'+S.css+';margin:'+PMARGIN+'mm}';
@@ -1830,13 +1855,13 @@ document.getElementById('v-png').addEventListener('click',function(){
   var cw=2*P+COLS*W+(COLS-1)*G+GU, ch=2*P+ROWS*H+(ROWS-1)*RG;
   var cv=document.createElement('canvas'); cv.width=cw; cv.height=ch;
   var ctx=cv.getContext('2d');
-  ctx.fillStyle='#fffdf6'; ctx.fillRect(0,0,cw,ch);
+  ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,cw,ch);
 
   function colX(c){return P + c*(W+G) + (c>SEAM?GU:0)}
   function rowY(r){return P + r*(H+RG)}
   var edge=Math.max(1,Math.round(dpi/150)), radius=px(1.5);
 
-  ctx.save(); ctx.setLineDash([px(1.5),px(1.5)]); ctx.strokeStyle='#b0a493'; ctx.lineWidth=edge;
+  ctx.save(); ctx.setLineDash([px(1.5),px(1.5)]); ctx.strokeStyle='#9aa3ac'; ctx.lineWidth=edge;
   var sx=colX(SEAM)+W+G/2+GU/2;
   ctx.beginPath(); ctx.moveTo(sx,P); ctx.lineTo(sx,ch-P); ctx.stroke();
   for(var r=1;r<ROWS;r++){
@@ -1857,6 +1882,9 @@ document.getElementById('v-png').addEventListener('click',function(){
     ctx.strokeStyle=colOf(q)[1]; ctx.lineWidth=edge;
     rrect(ctx,x,y,w,h,radius); ctx.stroke();
   }
+
+  stampWatermark(ctx,cw,ch);
+  stampLogo(ctx,cw,ch);
 
   var st=stageStats();
   cv.toBlob(function(blob){
@@ -1891,6 +1919,6 @@ if(location.hash==='#personalise') showTab('vis',false);
 <div id="print-root" aria-hidden="true"></div>
 <style id="print-style"></style>
 
-<script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="silphfolio" data-description="Support me on Buy me a coffee!" data-message="" data-color="#828282" data-position="Right" data-x_margin="34" data-y_margin="34"></script>
+<script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="silphfolio" data-description="Support me on Buy me a coffee!" data-message="" data-color="#F9982F" data-position="Right" data-x_margin="34" data-y_margin="34"></script>
 </body>
 </html>
