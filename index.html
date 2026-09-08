@@ -4,7 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Binder Studio</title>
-<link rel="icon" href="favicon.png">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="favicon.png" sizes="512x512">
+<link rel="apple-touch-icon" href="favicon.png">
 <style>
 /* Self-hosted fonts. Nothing is requested from Google, so no visitor data
    leaves this domain. Both families are SIL Open Font License 1.1. */
@@ -316,6 +318,11 @@ footer{color:var(--ink-3);font-size:12.5px;padding:0 0 50px}
     font-weight:400;color:#666}
   .pcut{position:absolute;inset:0;outline:0.2mm dashed #999;outline-offset:0}
   .psheet-logo{position:absolute;right:0;bottom:0;width:32mm;height:auto;opacity:.85}
+  /* Watermark sits across the whole sheet, above the cut pieces. Change the opacity
+     to taste, or move it behind the pieces by giving .ptile a z-index of 2. */
+  .psheet-mark{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:86%;height:auto;opacity:.14;pointer-events:none;z-index:1}
+  .psheet,.ptile,.ptile img{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
@@ -1824,8 +1831,8 @@ function doPrint(key){
             'mm;height:'+it.t.h+'mm"><img src="'+it.t.url+'" alt=""><span class="pcut"></span>'+
             '<b>'+it.t.w+'\u00d7'+it.t.h+'mm</b></div>';
     }
-    html+='<img class="psheet-logo" src="export-logo.png" alt="" '+
-          'onerror="this.remove()"></div>';
+    html+='<img class="psheet-mark" src="watermark.png" alt="" onerror="this.remove()">'+
+          '<img class="psheet-logo" src="export-logo.png" alt="" onerror="this.remove()"></div>';
   }
   document.getElementById('print-style').textContent=
     '@page{size:'+S.css+';margin:'+PMARGIN+'mm}';
