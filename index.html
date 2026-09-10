@@ -757,11 +757,6 @@ function atDefaults(){
 function drawRecNote(){
   document.getElementById('rec-note').hidden=!(atDefaults()&&!inspireMode);
 }
-function insertsNeeded(item){
-  var c=cardsWanted();
-  return c==null?null:Math.max(0,item.a-c);
-}
-
 function attrAt(key,i){
   var t=DATA.K[i];
   return key==='a'?DATA.A[t]:key==='b'?DATA.B[t]:key==='d'?DATA.D[t]:DATA.E[t];
@@ -1461,19 +1456,6 @@ function lockedPieces(){
   for(var i=0;i<stagePieces.length;i++) if(assign[i]&&assign[i].lock) out.push(stagePieces[i]);
   return out;
 }
-function itemKeepsLocks(item,locks){
-  if(!locks.length) return true;
-  var ps=pieceInfo(item);
-  for(var l=0;l<locks.length;l++){
-    var q=locks[l], ok=false;
-    for(var i=0;i<ps.length;i++){
-      var n=ps[i];
-      if(n.r===q.r&&n.c===q.c&&n.h===q.h&&n.w===q.w){ok=true;break}
-    }
-    if(!ok) return false;
-  }
-  return true;
-}
 var undoStack=[], UNDO_MAX=20;
 function snapshot(){
   return {vIndex:vIndex, fmt:fmt, stageFmtKey:stageFmtKey, edited:edited, showCustom:showCustom,
@@ -1510,10 +1492,6 @@ document.getElementById('v-undo').addEventListener('click',function(){
   drawUndoBtn(); drawStage();
 });
 
-function placedCount(){
-  var n=0; for(var k in assign) if(assign[k]&&assign[k].id!=null) n++;
-  return n;
-}
 function tilingKeepsLocks(t,locks){
   if(!locks.length) return true;
   var p=CACHE[stageFmtKey].tilings[t], i, l, found;
