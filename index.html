@@ -26,14 +26,44 @@
   src:url('fonts/ibm-plex-mono-500.woff2') format('woff2')}
 
 :root{
+  --btn-r:3px;
+  --ctl-h:34px;
+  --focus:#360e04;
+  --grid-gap:30px;
+  --grid-min:162px;
+  --hv-coffee-bg:#360e04;
+  --hv-coffee-fg:#e2ab2d;
+  --hv-navy-bg:#003ca6;
+  --hv-navy-fg:#e2ab2d;
+  --hv-orange-bg:#e2ab2d;
+  --hv-orange-fg:#003ca6;
+  --hv-sand-bg:#eddbbe;
+  --hv-sand-fg:#360e04;
+  --pan-r:3px;
+  --paper:#f9f9f9;
+  --pri-bg:#360e04;
+  --s11-edge:#002a75;
+  --s11-fill:#003ca6;
+  --s12-edge:#8a6410;
+  --s12-fill:#e2ab2d;
+  --s21-edge:#c08f1c;
+  --s21-fill:#e2ab2d;
+  --s22-edge:#b9a684;
+  --s22-fill:#eddbbe;
+  --thumb-c:26px;
+  --studio-gap:26px;
+  --tab-browse:#003ca6;
+  --tab-personalise:#e2ab2d;
+  --tab-ig:#eddbbe;
+  --tab-donate:#ff5f5f;
+  --arrow-dark:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%232a211c' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+  --arrow-gold:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23e2ab2d' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+  --arrow-brown:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23360e04' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+  --arrow-navy:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23003ca6' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
   --ink:#2a211c; --ink-2:#4a5560; --ink-3:#7d8894;
-  --paper:#eceef0; --well:#ffffff; --line:#c9ced4; --seam:#9aa3ac;
-  --s11-fill:#303994; --s11-edge:#1c2263;   /* 1x1 / card */
-  --s12-fill:#709fdb; --s12-edge:#3a6ba8;   /* 1x2        */
-  --s21-fill:#93c5ec; --s21-edge:#4e8ab8;   /* 2x1        */
-  --s22-fill:#a9d6f3; --s22-edge:#5f9cc4;   /* 2x2        */
-  --focus:#303994; --warn:#a33a26;
-  --c:20px; --r:28px; --gap:3px; --gut:6px; --pad:9px;
+  --well:#ffffff; --line:#c9ced4; --seam:#9aa3ac; --warn:#a33a26;
+  --c:var(--thumb-c); --r:calc(var(--thumb-c) * 1.3968);
+  --gap:3px; --gut:6px; --pad:9px;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -52,7 +82,7 @@ h1{font-family:'Outfit',"Space Grotesk",sans-serif;font-size:clamp(24px,4vw,36px
 h1 .logo{display:block;height:clamp(96px,15vw,148px);width:auto;max-width:100%}
 h1 a{display:inline-block;text-decoration:none;color:inherit;cursor:pointer}
 h1 em{font-style:normal;color:var(--ink-3)}
-.sub{margin:0;color:var(--ink-2);max-width:66ch;font-size:clamp(14px,1.75vw,16.5px);line-height:1.5}
+.sub{margin:0;color:var(--ink-2);max-width:66ch;font-size:clamp(12.5px,1.5vw,14.5px);line-height:1.5}
 .help{margin-top:18px;border:1px solid var(--line);background:var(--well);border-radius:3px}
 .help summary{cursor:pointer;padding:11px 15px;font-size:14px;font-weight:500;list-style:none;
   display:flex;align-items:center;gap:8px}
@@ -76,37 +106,44 @@ h1 em{font-style:normal;color:var(--ink-3)}
   padding:9px 14px;font-size:13.5px;cursor:pointer;box-shadow:0 1px 6px rgba(0,0,0,.12)}
 .totop:hover{border-color:var(--ink)}
 .tabs button,.tab-links a{
-  font-family:'Outfit',"Space Grotesk",sans-serif;font-weight:500;font-size:clamp(16px,2vw,19px);background:none;border:0;
-  border-bottom:2px solid transparent;padding:10px 16px;cursor:pointer;color:var(--ink-3);
-  margin-bottom:-1px;border-radius:0;text-decoration:none;display:inline-block;line-height:1.3;
-}
-.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--ink);font-weight:500}
-.tab-links a:link,.tab-links a:visited,.tab-links a:active{color:var(--ink-3)}
-.tabs button:hover,.tab-links a:hover{color:var(--ink)}
+  font-family:'Outfit',"Space Grotesk",sans-serif;font-weight:500;font-size:clamp(16px,2vw,19px);
+  background:transparent;border:0;padding:9px 16px;cursor:pointer;color:var(--ink-3);
+  margin-bottom:-1px;border-radius:8px 8px 0 0;text-decoration:none;display:inline-block;line-height:1.3}
+.tab-links a:link,.tab-links a:visited{color:var(--ink-3)}
+#tab-browse:hover,#tab-vis:hover,.tab-links a:hover{color:#f9f9f9}
+#tab-browse:hover{background:var(--tab-browse)}
+#tab-vis:hover{background:var(--tab-personalise)}
+.tab-links a:nth-child(1):hover{background:var(--tab-ig);color:var(--ink)}
+.tab-links a:nth-child(2):hover{background:var(--tab-donate)}
+#tab-browse[aria-selected="true"]{background:var(--tab-browse);color:#f9f9f9}
+#tab-vis[aria-selected="true"]{background:var(--tab-personalise);color:#f9f9f9}
+.tab-links a:nth-child(1):active{background:var(--tab-ig);color:#f9f9f9}
+.tab-links a:nth-child(2):active{background:var(--tab-donate);color:#f9f9f9}
 [hidden]{display:none!important}
 
 /* controls */
 select,button.btn,input[type=file]{font-family:"Space Grotesk",sans-serif;font-size:14px;color:var(--ink)}
-select,button.btn{background:var(--well);border:1px solid var(--line);border-radius:2px;padding:7px 12px;cursor:pointer}
-select{width:100%;height:36px;box-sizing:border-box;padding:7px 30px 7px 10px;
+select,button.btn{background:var(--well);border:1px solid var(--line);border-radius:var(--btn-r);padding:7px 12px;cursor:pointer}
+select{width:100%;height:var(--ctl-h);box-sizing:border-box;padding:0 30px 0 10px;
   -webkit-appearance:none;appearance:none;
-  background-image:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%232a211c' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-image:var(--arrow-dark);
   background-repeat:no-repeat;background-position:right 11px center;background-size:11px 7px}
 
-/* hover palettes */
-.hv-orange:hover{background-color:#F9982F;color:#303994;border-color:#F9982F}
-.hv-navy:hover{background-color:#303994;color:#D7E021;border-color:#303994}
-.hv-neon:hover{background-color:#D7E021;color:#303994;border-color:#D7E021}
-.hv-coffee:hover{background-color:#2a211c;color:#D7E021;border-color:#2a211c}
-.hv-sky:hover{background-color:#A9D6F3;color:#303994;border-color:#A9D6F3}
-select.hv-orange:hover,select.hv-navy:hover,select.hv-neon:hover,
-select.hv-coffee:hover,select.hv-sky:hover{background-image:none}
+.hv-orange:hover{background-color:var(--hv-orange-bg);color:var(--hv-orange-fg);border-color:var(--hv-orange-fg)}
+.hv-navy:hover{background-color:var(--hv-navy-bg);color:var(--hv-navy-fg);border-color:var(--hv-navy-fg)}
+.hv-coffee:hover{background-color:var(--hv-coffee-bg);color:var(--hv-coffee-fg);border-color:var(--hv-coffee-fg)}
+.hv-sand:hover{background-color:var(--hv-sand-bg);color:var(--hv-sand-fg);border-color:var(--hv-sand-fg)}
+select.hv-orange:hover{background-image:var(--arrow-navy)}
+select.hv-sand:hover{background-image:var(--arrow-brown)}
+select.hv-navy:hover,select.hv-coffee:hover{background-image:var(--arrow-gold)}
+select.hv-orange:hover,select.hv-navy:hover,
+select.hv-coffee:hover,select.hv-sand:hover{border-color:var(--line)}
 
 /* read-only companion to the dropdowns */
-.field.readout output{display:flex;align-items:center;height:36px;box-sizing:border-box;
-  background:var(--paper);border:1px solid var(--line);border-radius:2px;padding:0 10px;
+.field.readout output{display:flex;align-items:center;height:var(--ctl-h);box-sizing:border-box;
+  background:var(--paper);border:1px solid var(--line);border-radius:var(--btn-r);padding:0 10px;
   font-family:"IBM Plex Mono",monospace;font-size:14px;color:var(--ink)}
-.bar-in .btn{height:36px;box-sizing:border-box;padding-top:0;padding-bottom:0}
+.bar-in .btn{height:var(--ctl-h);box-sizing:border-box;padding-top:0;padding-bottom:0}
 .sel-wrap{position:relative;display:block}
 .flock{position:absolute;right:29px;top:50%;transform:translateY(-50%);border:0;background:none;
   padding:0;line-height:0;color:var(--ink-3);opacity:.32;cursor:pointer;display:flex}
@@ -121,7 +158,7 @@ button.btn:disabled{color:var(--ink-3);opacity:.55;cursor:default}
 button.btn.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
 button.btn.primary:hover:not(:disabled){background:#000}
 
-.bar{position:sticky;top:0;z-index:20;background:rgba(236,238,240,.94);
+.bar{position:sticky;top:0;z-index:20;background:rgba(249,249,249,.94);
   backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 .bar.unstick{position:static;backdrop-filter:none;background:transparent}
 .bar-in{display:flex;flex-wrap:wrap;gap:12px 14px;align-items:flex-end;padding:12px 22px;max-width:1180px;margin:0 auto}
@@ -148,7 +185,7 @@ button.btn.primary:hover:not(:disabled){background:#000}
   letter-spacing:-.04em;line-height:1}
 .section-head .lab{font-size:14px;color:var(--ink-2)}
 .section-head .cnt{margin-left:auto;font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-3)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(var(--grid-min),1fr));gap:var(--grid-gap)}
 #results>.grid:first-child{margin-top:28px}
 #results>.section-head:first-child{margin-top:28px}
 figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer}
@@ -170,7 +207,7 @@ figcaption b{color:var(--ink-2);font-weight:400}
 .use:hover{border-color:var(--ink);color:var(--ink)}
 
 /* a page */
-.page{position:relative;background:var(--well);border:1px solid var(--line);border-radius:3px;
+.page{position:relative;background:var(--well);border:1px solid var(--line);border-radius:var(--pan-r);
   padding:var(--pad);display:grid;
   --rgap:4px;column-gap:var(--gap);row-gap:var(--rgap)}
 .rowseam{position:absolute;left:6px;right:6px;height:0;
@@ -190,37 +227,38 @@ figcaption b{color:var(--ink-2);font-weight:400}
 
 /* ---------- visualiser ---------- */
 .studio{display:grid;grid-template-columns:212px minmax(0,1fr) 300px;
-  gap:26px;padding-top:24px;align-items:start}
-.stage-side{background:var(--well);border:1px solid var(--line);border-radius:3px;
+  column-gap:var(--studio-gap);row-gap:var(--studio-gap);
+  padding-top:24px;align-items:stretch}
+.stage-side{background:var(--well);border:1px solid var(--line);border-radius:var(--pan-r);
   padding:16px;display:flex;flex-direction:column;gap:20px}
 .stage-side .ctl-group{align-items:stretch}
 .stage-side .ctl-group h3{text-align:left}
 .stage-side .stage-ctl{flex-direction:column;align-items:stretch;gap:7px}
 .stage-side .stage-ctl .btn,.stage-side .stage-ctl select{width:100%;text-align:left}
 @media (max-width:1100px){
-  .studio{grid-template-columns:minmax(0,1fr)}
+  .studio{grid-template-columns:minmax(0,1fr);row-gap:var(--studio-gap)}
   .stage{order:1}.stage-side{order:2}.studio > .panel{order:3}
   .stage-side .stage-ctl{flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:center}
   .stage-side .stage-ctl .btn,.stage-side .stage-ctl select{width:auto;text-align:center}
   .stage-side .ctl-group{align-items:center}
   .stage-side .ctl-group h3{text-align:center}
 }
-.stage{background:var(--well);border:1px solid var(--line);border-radius:3px;padding:20px;
+.stage{background:var(--well);border:1px solid var(--line);border-radius:var(--pan-r);padding:20px;
   display:flex;flex-direction:column;align-items:center;gap:14px}
 :root{--sc:clamp(48px,11vw,104px)}
 .page.big{--c:var(--sc);--r:calc(var(--sc) * 1.3968);--gap:6px;--gut:16px;--pad:16px;--rgap:9px;border-width:1px}
-.page.big::before{top:calc(var(--pad) + var(--r) + 4px)}
-.page.big::after{top:calc(var(--pad) + (2 * var(--r)) + 13px)}
 .slot{border-radius:3px;position:relative;overflow:hidden;cursor:pointer;
   background-repeat:no-repeat;background-position:center;background-size:cover;border:1px solid}
 .slot.fit-cover{background-size:cover}
 .slot.fit-contain{background-size:contain}
+.slot.filled.fit-contain{background-color:transparent}
 .slot.fit-stretch{background-size:100% 100%}
 /* Locked marker: a padlock with no background, so the artwork stays visible.
    The dark drop shadow keeps it legible over light and dark images alike. */
-.slot .lockmark{position:absolute;top:3px;left:3px;width:14px;height:14px;
-  pointer-events:none;color:#fff;fill:#fff;
+.slot .lockmark{position:absolute;top:2px;left:2px;width:18px;height:18px;padding:2px;
+  border:0;background:none;cursor:pointer;color:#fff;fill:#fff;line-height:0;
   filter:drop-shadow(0 0 1.5px rgba(0,0,0,.95)) drop-shadow(0 0 3px rgba(0,0,0,.55))}
+.slot .lockmark svg{width:100%;height:100%;display:block}
 .slot.locked .clear{display:none}
 .stage-ctl select{width:auto}
 .slot.s11{background-color:var(--s11-fill);border-color:var(--s11-edge)}
@@ -228,7 +266,7 @@ figcaption b{color:var(--ink-2);font-weight:400}
 .slot.s21{background-color:var(--s21-fill);border-color:var(--s21-edge)}
 .slot.s22{background-color:var(--s22-fill);border-color:var(--s22-edge)}
 .slot.sel{outline:3px solid var(--ink);outline-offset:1px}
-.btn.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.btn.on,.btn.on:hover{background:#ff5f5f;color:#ffffff;border-color:#ff5f5f}
 .page.adjust .slot.filled{cursor:grab;touch-action:none}
 .page.adjust .slot.filled:active{cursor:grabbing}
 .slot.hot{outline:3px dashed var(--ink);outline-offset:1px}
@@ -244,7 +282,9 @@ figcaption b{color:var(--ink-2);font-weight:400}
 .ctl-group{width:100%;display:flex;flex-direction:column;align-items:center;gap:9px}
 .ctl-group h3{margin:0;font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.09em;
   text-transform:uppercase;color:var(--ink-3);font-weight:400}
-.saved{margin-top:20px;padding-top:16px;border-top:1px solid var(--line)}
+.saved{grid-column:1 / -1;order:4;align-self:start;background:var(--well);
+  border:1px solid var(--line);border-radius:var(--pan-r);padding:16px 18px;margin:0}
+.saved h3:first-child{margin-top:0}
 .saved h3{margin:14px 0 8px;font-family:"IBM Plex Mono",monospace;font-size:10.5px;
   letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);font-weight:400}
 .mini{display:flex;flex-wrap:wrap;gap:9px}
@@ -257,7 +297,7 @@ figcaption b{color:var(--ink-2);font-weight:400}
   border:0;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;font-size:10px;cursor:pointer;padding:0}
 .stage-meta{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--ink-3);text-align:center}
 
-.panel{background:var(--well);border:1px solid var(--line);border-radius:3px;padding:16px}
+.panel{background:var(--well);border:1px solid var(--line);border-radius:var(--pan-r);padding:16px}
 .panel h2{font-size:14px;margin:0 0 4px;letter-spacing:-.01em}
 .panel p.hint{margin:0 0 12px;font-size:12.5px;color:var(--ink-3);line-height:1.45}
 .drop{border:1px dashed var(--line);border-radius:3px;padding:20px 12px;text-align:center;
@@ -318,10 +358,6 @@ footer{color:var(--ink-3);font-size:12.5px;padding:0 0 50px}
     font-weight:400;color:#666}
   .pcut{position:absolute;inset:0;outline:0.2mm dashed #999;outline-offset:0}
   .psheet-logo{position:absolute;right:0;bottom:0;width:32mm;height:auto;opacity:.85}
-  /* Watermark sits across the whole sheet, above the cut pieces. Change the opacity
-     to taste, or move it behind the pieces by giving .ptile a z-index of 2. */
-  .psheet-mark{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-    width:86%;height:auto;opacity:.14;pointer-events:none;z-index:1}
   .psheet,.ptile,.ptile img{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
@@ -335,7 +371,7 @@ footer{color:var(--ink-3);font-size:12.5px;padding:0 0 50px}
       <h1>
         <a href="#browse" id="brand-link" aria-label="Back to the layouts">
           <img class="logo" src="logo.png" alt="The Binder Studio by Silphfolio"
-               width="1080" height="1080"
+               width="1384" height="864"
                onerror="this.remove();document.getElementById('brand-text').hidden=false">
           <span id="brand-text" hidden>The Binder Studio by Silphfolio</span>
         </a>
@@ -363,17 +399,16 @@ footer{color:var(--ink-3);font-size:12.5px;padding:0 0 50px}
         <option value="3x3-right">9-Pocket Right Page</option>
       </select></div>
       <div class="field"><label for="f-11">Cards</label><span class="sel-wrap"><select id="f-11"><option value="any">Any</option></select><button class="flock" type="button" data-flock="c" aria-label="Lock this value"></button></span></div>
-      <div class="field readout"><label>1×1 Inserts Required</label><output id="need-11">—</output></div>
+      <div class="field readout"><label>1×1 Inserts</label><output id="need-11" title="This is the number of 1x1 inserts required to fill the binder page completely given the chosen combination of art inserts and number of cards.">—</output></div>
       <div class="field"><label for="f-12">1×2 Inserts</label><span class="sel-wrap"><select id="f-12"><option value="any">Any</option></select><button class="flock" type="button" data-flock="b" aria-label="Lock this value"></button></span></div>
       <div class="field"><label for="f-21">2×1 Inserts</label><span class="sel-wrap"><select id="f-21"><option value="any">Any</option></select><button class="flock" type="button" data-flock="d" aria-label="Lock this value"></button></span></div>
       <div class="field"><label for="f-22">2×2 Inserts</label><span class="sel-wrap"><select id="f-22"><option value="any">Any</option></select><button class="flock" type="button" data-flock="e" aria-label="Lock this value"></button></span></div>
       <div class="field tight"><label for="reset">&nbsp;</label><button class="btn hv-coffee" id="reset" type="button" title="Return to the recommended starting settings for this binder">Default</button></div>
-      <div class="field tight"><label for="shuffle-order">&nbsp;</label><button class="btn hv-neon" id="shuffle-order" type="button" title="Roll the settings onto a random combination">Inspire Me</button></div>
+      <div class="field tight"><label for="shuffle-order">&nbsp;</label><button class="btn hv-orange" id="shuffle-order" type="button" title="Roll the settings onto a random combination">Inspire Me</button></div>
       <p class="rec-note" id="rec-note" hidden>These are our recommended settings. Feel free to change them and get creative.</p>
     </div>
   </div>
 
-<!-- ============ BROWSE ============ -->
 <section id="p-browse" role="tabpanel" aria-labelledby="tab-browse">
   <div class="wrap">
     <details class="help">
@@ -382,12 +417,12 @@ footer{color:var(--ink-3);font-size:12.5px;padding:0 0 50px}
         <dl>
           <dt>Binder format</dt>
           <dd>Pick the binder page you are filling. On a 9 pocket page the stitching sits off centre, so the left and right pages are mirror images of each other. Choose the one matching the side you are laying out.</dd>
-          <dt>x1 Inserts Required</dt>
-          <dd>This is the number of 1x1 inserts required to fill the binder page completely given the chosen combination of art inserts and number of cards. </dd>          
-           <dt>Lock</dt>
-          <dd>Tap on the lock icon on the dropdown menu to lock the value. That value will not be randomised with "Inspire Me".</dd>           
-           <dt>Default</dt>
-          <dd>Return to the recommended settings for the binder you have chosen.</dd>
+          <dt>1×1 Inserts Required</dt>
+          <dd>This is the number of 1x1 inserts required to fill the binder page completely given the chosen combination of art inserts and number of cards.</dd>
+          <dt>Lock</dt>
+          <dd>Tap on the lock icon on the dropdown menu to lock the value. That value will not be randomised with "Inspire Me".</dd>
+          <dt>Default</dt>
+          <dd>Return to the recommended settings for the binder format you have chosen.</dd>
           <dt>Inspire Me</dt>
           <dd>Shuffles the results at random, so you see a completely new spread of the Layouts.</dd>
         </dl>
@@ -411,19 +446,18 @@ footer{color:var(--ink-3);font-size:12.5px;padding:0 0 50px}
   </div>
 </section>
 
-<!-- ============ VISUALISE ============ -->
 <section id="p-vis" role="tabpanel" aria-labelledby="tab-vis" hidden>
   <div class="wrap">
-    <details class="help" style="margin-top:0">
+    <details class="help">
       <summary>How to use this page</summary>
       <div class="body">
         <dl>
           <dt>Add images</dt>
           <dd>Click the dotted box to choose files, or drag images onto it. They stay in your browser and are never uploaded anywhere.</dd>
           <dt>Place an image</dt>
-          <dd>Tap a pocket to select it, then press Add image to choose a file straight into it. If you have already added images, a row of them appears underneath so you can tap one to reuse it. You can also tap an image in the tray and then tap a pocket, or drag one across on a computer.</dd>
+          <dd>Tap a pocket to select it, then press “Add Image” to choose a file straight into it. If you have already added images, a row of them appears underneath so you can tap one to reuse it. You can also tap an image in the tray and then tap a pocket, or drag one across on a computer.</dd>
           <dt>Adjust Crop</dt>
-          <dd>Turns on repositioning. Drag inside any pocket to slide the image around within it and choose what shows. Works with Crop to Fill, since that is the mode where the image is larger than the pocket. Press it again to go back to selecting pockets.</dd>
+          <dd>Reposition the image inside any pocket. Tap the button again to save your edits. Only works with the Crop to Fill option.</dd>
           <dt>Fit dropdown</dt>
           <dd>Sets that same choice for every image on the page at once.</dd>
           <dt>Selecting pockets</dt>
@@ -435,40 +469,36 @@ footer{color:var(--ink-3);font-size:12.5px;padding:0 0 50px}
           <dt>Unmerge</dt>
           <dd>Select a large art insert and press Unmerge to break it back into single pockets.</dd>
           <dt>Lock a pocket</dt>
-          <dd>Select one or more pockets and press Lock. A padlock appears on them, and they are pinned in place. Shuffle then only moves to layouts that still contain that exact pocket, so it and whatever is in it stay exactly where they are while everything around them changes. Locked pockets also cannot be overwritten, swapped or emptied, and they survive Clear slots. You can lock an empty pocket too, to hold its position while you fill the rest. Tap the padlock again to unlock.</dd>
-          <dt>× on a pocket</dt>
-          <dd>Empties that pocket. The image stays in your tray.</dd>
-          <dt>× on a tray image</dt>
-          <dd>Removes that one image, including from any pocket it was in. Clear all images empties the whole tray at once.</dd>
+          <dd>Select one or more pockets and press Lock. A padlock appears on them, and they are pinned in place. Shuffle then only moves to layouts that still contain that exact pocket, so it and whatever is in it stay exactly where they are while everything around them changes. Locked pockets also cannot be overwritten, swapped or emptied, and they survive “Reset Layout”. You can lock an empty pocket too, to hold its position while you fill the rest. Tap the padlock again to unlock.</dd>
           <dt>Shuffle</dt>
-          <dd>Moves to another layout that uses the same mix, the same number of each insert size, so every image keeps a pocket of its own size. Press Inspire Me for a different mix altogether.</dd>
-          <dt>Clear slots</dt>
-          <dd>Reset Layout empties every unlocked pocket at once, keeping your images in the tray.</dd>
+          <dd>Moves to another layout with the same number of cards and inserts. Tap “Inspire Me” for a completely different layout.</dd>
+          <dt>Reset Layout</dt>
+          <dd>Empties every unlocked pocket at once, keeping your images in the tray.</dd>
           <dt>Undo</dt>
-          <dd>Reverses the last change, whatever it was: a new layout, a merge, a lock, an image dropped into a pocket. It sits under the page beside Reset Layout and keeps the last twenty steps.</dd>
+          <dd>Reverses the last change you made up to the last twenty steps.</dd>
           <dt>Mirror</dt>
           <dd>Flips the layout left to right. On a 9 pocket page the mirror belongs to the opposite page, so the binder format switches with it.</dd>
           <dt>Favourite</dt>
-          <dd>Keeps the current layout in the Favourites row on the right. Every layout you open from Browse also lands in Recent automatically. Click any of them to load it back.</dd>
-          <dt>Back to Layouts</dt>
-          <dd>Returns to the Browse tab at the exact spot you left it, so you do not lose your place. The browser Back button does the same.</dd>
-          <dt>Download PNG</dt>
-          <dd>Saves the layout as an image. Pick 300 dpi for printing, or 150 dpi for a smaller file to post online.</dd>
+          <dd>Keeps the current layout in the Favourites row on the right. Every layout you open from Browse Layouts also lands in Recent automatically. Click any of them to load it back.</dd>
+          <dt>Download Layout</dt>
+          <dd>Saves the layout as an image.</dd>
+          <dt>Print Inserts</dt>
+          <dd>Download a ready-to-print file in A4 or US Letter canvas. All images are set to a resolution of 300 DPI.</dd>
         </dl>
       </div>
     </details>
-    <details class="help" style="margin-top:0">
+    <details class="help">
       <summary>Insert sizes and image resolution</summary>
       <div class="body">
         <dl>
-          <dt>Card / 1×1 insert</dt>
-          <dd>A 1&times;1 art insert is <b>68 &times; 94 mm</b>. Upload at least <b>804 &times; 1111 px</b> for a clean 300 dpi print.</dd>
-          <dt>Two across</dt>
-          <dd>One insert spanning two pockets side by side is <b>140 &times; 94 mm</b>. Upload at least <b>1654 &times; 1111 px</b>.</dd>
-          <dt>Two down</dt>
-          <dd>A pocket pair stacked vertically crosses the row stitching, so it is <b>two separate pieces of 68 &times; 94 mm</b>. Upload at least <b>804 &times; 2221 px</b> and the print splits it for you.</dd>
-          <dt>Two by two</dt>
-          <dd>Same reason: <b>two pieces of 140 &times; 94 mm</b>. Upload at least <b>1654 &times; 2221 px</b>.</dd>
+          <dt>Card / 1×1</dt>
+          <dd>A 1×1 art insert is 68 × 94 mm. Upload at least 804 × 1111 px for a clean 300 dpi print.</dd>
+          <dt>Two across (1x2)</dt>
+          <dd>One insert spanning two pockets side by side is 140 × 94 mm. Upload at least 1654 × 1111 px.</dd>
+          <dt>Two down (2x1)</dt>
+          <dd>A pocket pair stacked vertically crosses the row stitching, two separate pieces of 68 × 94 mm. Upload at least 804 × 2221 px and the Studio splits it for you.</dd>
+          <dt>Two by two (2x2)</dt>
+          <dd>Two pieces of 140 × 94 mm. Upload at least 1654 × 2221 px.</dd>
         </dl>
       </div>
     </details>
@@ -481,13 +511,13 @@ footer{color:var(--ink-3);font-size:12.5px;padding:0 0 50px}
             <button class="btn hv-orange" id="v-back" type="button" title="Return to where you were in Browse Layouts">&lsaquo; Back to Layouts</button>
             <button class="btn hv-navy" id="v-shuffle" type="button" title="Another layout with the same mix of inserts, keeping your images">Shuffle</button>
             <button class="btn hv-coffee" id="v-mirror" type="button" title="Flip the layout left to right">Mirror</button>
-            <button class="btn hv-neon" id="v-fav" type="button" title="Keep this layout in your favourites">&#9734; Favourite</button>
+            <button class="btn hv-orange" id="v-fav" type="button" title="Keep this layout in your favourites">&#9734; Favourite</button>
           </div>
         </div>
         <div class="ctl-group">
           <h3>Image settings</h3>
           <div class="stage-ctl">
-            <select id="v-fit" class="hv-sky" aria-label="How images fill their pocket">
+            <select id="v-fit" class="hv-sand" aria-label="How images fill their pocket">
               <option value="cover">Crop to Fill</option>
               <option value="contain">Shrink to Fit</option>
             </select>
@@ -500,9 +530,9 @@ footer{color:var(--ink-3);font-size:12.5px;padding:0 0 50px}
             <select id="v-dpi" class="hv-orange" aria-label="Print resolution">
               <option value="300" selected>300 DPI</option>
             </select>
-            <button class="btn hv-navy" id="v-png" type="button" title="Save this layout as an image">Download Layout</button>
-            <button class="btn hv-neon" id="v-print-a4" type="button" title="Print art inserts at true size on A4">Print Inserts on A4</button>
-            <button class="btn hv-coffee" id="v-print-letter" type="button" title="Print art inserts at true size on US Letter">Print Inserts on US Letter</button>
+            <button class="btn hv-coffee" id="v-png" type="button" title="Save this layout as an image">Download Layout</button>
+            <button class="btn hv-orange" id="v-print-a4" type="button" title="Print art inserts at true size on A4">Print Inserts on A4</button>
+            <button class="btn hv-navy" id="v-print-letter" type="button" title="Print art inserts at true size on US Letter">Print Inserts on US Letter</button>
           </div>
         </div>
       </div>
@@ -513,8 +543,8 @@ footer{color:var(--ink-3);font-size:12.5px;padding:0 0 50px}
         <div class="stage-sel" id="stage-actions"></div>
         <div class="pick" id="slot-pick" hidden></div>
         <div class="stage-ctl">
-          <button class="btn hv-coffee" id="v-undo" type="button" title="Reverse the last change" disabled>Undo</button>
-          <button class="btn hv-sky" id="v-clear" type="button" title="Empty every pocket. Your images stay in the tray">Reset Layout</button>
+          <button class="btn hv-sand" id="v-undo" type="button" title="Reverse the last change" disabled>Undo</button>
+          <button class="btn hv-coffee" id="v-clear" type="button" title="Empty every pocket. Your images stay in the tray">Reset Layout</button>
         </div>
         <input type="file" id="file-slot" accept="image/*" multiple hidden>
         <p class="stage-meta" id="stage-note"></p>
@@ -531,13 +561,14 @@ footer{color:var(--ink-3);font-size:12.5px;padding:0 0 50px}
         <div class="tray" id="tray" hidden></div>
         <button class="btn" id="clear-images" type="button" hidden>Clear All Images</button>
         <p class="privacy">Nothing is uploaded anywhere. Images stay in this browser tab and disappear when you close it.</p>
-        <div class="saved">
-          <h3>Favourites</h3>
-          <div class="mini" id="fav-list"></div>
-          <h3>Recent</h3>
-          <div class="mini" id="recent-list"></div>
-        </div>
       </aside>
+
+      <div class="saved">
+        <h3>Favourites</h3>
+        <div class="mini" id="fav-list"></div>
+        <h3>Recent</h3>
+        <div class="mini" id="recent-list"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -546,12 +577,9 @@ footer{color:var(--ink-3);font-size:12.5px;padding:0 0 50px}
 (function(){
 "use strict";
 
-/* ================= enumeration ================= */
 var PER_PAGE=72;
 var SHAPES=[[1,1],[1,2],[2,1],[2,2]];
 
-/* seam = zero-based index of the column immediately left of the stitch line.
-   A piece two columns wide may never straddle it. */
 var FORMATS={
   '3x3-left': {cols:3, rows:3, seam:1, label:'9-Pocket Left Page',  mirror:'3x3-right'},
   '3x3-right':{cols:3, rows:3, seam:0, label:'9-Pocket Right Page', mirror:'3x3-left'},
@@ -559,8 +587,6 @@ var FORMATS={
 };
 var CACHE={}, fmt='4x3';
 
-/* Every pocket holds an art insert, so a tiling is a layout: there is nothing
-   further to assign. Layouts are held as a list of canonical tiling indices. */
 function buildFormat(key){
   if(CACHE[key]) return CACHE[key];
   var F=FORMATS[key], cols=F.cols, rows=F.rows, seam=F.seam, tilings=[];
@@ -604,8 +630,6 @@ function buildFormat(key){
     if(n11>maxA) maxA=n11;
   }
 
-  /* Flipping a page left to right gives a mirror of the same layout. Where the
-     mirror lands back in this format, only one of each pair is kept. */
   function keyOfPieces(pl){
     return pl.slice().sort(function(a,b){return a[0]-b[0]||a[1]-b[1]})
              .map(function(x){return x.join(',')}).join('|');
@@ -624,7 +648,6 @@ function buildFormat(key){
 
   var keep=[];
   for(t=0;t<nt;t++) if(!selfMirror||t<=mirrorT[t]) keep.push(t);
-  /* Layouts with more 1x2 inserts come first, then 2x2, then 2x1. */
   keep.sort(function(x,y){return B[y]-B[x]||E[y]-E[x]||D[y]-D[x]||A[x]-A[y]||x-y});
 
   CACHE[key]={tilings:tilings,K:new Int16Array(keep),n:keep.length,
@@ -644,13 +667,11 @@ function itemFromT(key,t){
 }
 function pockets(){return FORMATS[fmt].cols*FORMATS[fmt].rows}
 
-/* visualiser state, declared early so the stage can redraw on any filter change */
 var images=[], nextId=1, selImg=null, vIndex=0, assign={}, stageItem=null;
 var selSlots=[], stagePieces=null, stageFmtKey=fmt, edited=false, stageNote='', stageSig=null;
 var showCustom=true;
 var defaultFit='cover';
 
-/* ================= shared drawing ================= */
 function fmtOf(item){return FORMATS[item.f]}
 function gridCol(c,F){return c<=F.seam ? c+1 : c+2}
 function gridTemplate(F){
@@ -658,8 +679,6 @@ function gridTemplate(F){
          (F.cols-F.seam-1)+',var(--c));'+
          'grid-template-rows:repeat('+F.rows+',var(--r));';
 }
-/* One dashed stitch line per row boundary, positioned from the same variables the
-   grid uses, so it stays correct for any number of rows. */
 function rowSeams(F){
   var h='';
   for(var r=1;r<F.rows;r++)
@@ -696,17 +715,13 @@ function pageHTML(item){
   return html+'</div>';
 }
 
-/* ================= browse ================= */
 var sel={c:document.getElementById('f-11'),
          b:document.getElementById('f-12'),d:document.getElementById('f-21'),
          e:document.getElementById('f-22')};
 var FILTERS=[{el:sel.c,key:'c'},{el:sel.b,key:'b'},{el:sel.d,key:'d'},{el:sel.e,key:'e'}];
-/* Cards is a minimum, not an exact count: a layout qualifies when it has at least
-   that many single pockets. Whatever is left over is filled with 1x1 art inserts. */
 function singlesAt(i){ return DATA.A[DATA.K[i]] }
 function cardsWanted(){ var v=sel.c.value; return (v&&v!=='any')?+v:null }
 
-/* A locked dropdown holds its value when Inspire Me randomises the rest. */
 var filterLock={c:false,b:false,d:false,e:false};
 function lockIcon(on){
   return '<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">'+
@@ -723,7 +738,6 @@ function drawLocks(){
     btns[i].setAttribute('aria-label',(on?'Unlock ':'Lock ')+'this value');
   }
 }
-/* How many 1x1 art inserts are still needed once the chosen cards are placed. */
 function drawNeed(){
   var out=document.getElementById('need-11'), want=cardsWanted();
   if(!viewN||want==null){ out.textContent='\u2014'; return }
@@ -755,16 +769,16 @@ function attrAt(key,i){
 function matchesIdx(i,skip){
   for(var k=0;k<FILTERS.length;k++){
     var f=FILTERS[k]; if(f.key===skip) continue;
-    var v=f.el.value; if(!v||v==='any') continue;
-    if(f.key==='c'){ if(singlesAt(i)<+v) return false }
-    else if(attrAt(f.key,i)!==+v) return false;
+    var v=f.el.value;
+    if(f.key==='c'){
+      if(singlesAt(i) < ((!v||v==='any')?1:+v)) return false;
+      continue;
+    }
+    if(!v||v==='any') continue;
+    if(attrAt(f.key,i)!==+v) return false;
   }
   return true;
 }
-/* One sweep serves all five dropdowns: an arrangement that fails no filter counts
-   towards every list, and one that fails exactly one counts towards that list only. */
-/* Simple per-filter sweep: the layout sets are small now, and the cards filter
-   needs its own tally because it matches "at least this many". */
 function refreshOptions(){
   for(var i=0;i<FILTERS.length;i++){
     var f=FILTERS[i], counts={}, keys=[], total=0, j, v;
@@ -792,17 +806,16 @@ function refreshOptions(){
   }
 }
 
-var view=new Int32Array(0), viewN=0, viewGroup={}, inspireMode=false;
+var view=new Int32Array(0), viewN=0, inspireMode=false;
 function viewItem(i){ return makeItem(fmt, view[i]) }
 function applyFilters(){
   inspireMode=false;
   refreshOptions();
   if(view.length<DATA.n) view=new Int32Array(DATA.n);
-  viewN=0; viewGroup={};
+  viewN=0;
   for(var j=0;j<DATA.n;j++){
     if(!matchesIdx(j,null)) continue;
     view[viewN++]=j;
-    var g=DATA.B[DATA.K[j]]; viewGroup[g]=(viewGroup[g]||0)+1;
   }
   if(shuffled) shuffleView();
   blockStart=0; render(); syncStageNav(); drawStage(); drawNeed(); drawRecNote();
@@ -812,7 +825,6 @@ document.getElementById('reset').addEventListener('click',function(){
   shuffled=false;
   applyDefaults();
 });
-/* Recommended starting point for each binder size. */
 var FORMAT_DEFAULTS={
   '4x3':      {c:'6', b:'1'},
   '3x3-left': {c:'5'},
@@ -826,8 +838,6 @@ function applyDefaults(){
     if(d[order[i]]){ sel[order[i]].value=d[order[i]]; applyFilters() }
   }
 }
-/* Carry the 1x2 choice across a format change, falling back to the default if the
-   number is out of range on the new page. */
 function switchFormat(key){
   fmt=key;
   DATA=buildFormat(fmt); view=new Int32Array(0);
@@ -852,11 +862,9 @@ function newGrid(){
   var g=document.createElement('div'); g.className='grid';
   document.getElementById('results').appendChild(g); curGrid=g;
 }
-function sectionHead(n12){
-  var inSec=viewGroup[n12]||0;
+function sectionHead(){
   var d=document.createElement('div'); d.className='section-head';
-  d.innerHTML='<span class="n">'+n12+'</span><span class="lab">1\u00d72 insert'+
-    (n12===1?'':'s')+' on the page</span><span class="cnt">'+inSec.toLocaleString()+' total</span>';
+  d.innerHTML='<span class="cnt">'+viewN.toLocaleString()+' total</span>';
   document.getElementById('results').appendChild(d);
 }
 function appendBatch(){
@@ -864,11 +872,7 @@ function appendBatch(){
   var end=Math.min(shown+PER_PAGE, viewN, blockStart+BLOCK), buf='';
   for(var i=shown;i<end;i++){
     var x=viewItem(i);
-    if(!shuffled && x.b!==lastSec){
-      if(buf&&curGrid){curGrid.insertAdjacentHTML('beforeend',buf); buf=''}
-      lastSec=x.b; sectionHead(x.b); newGrid();
-    }
-    if(!curGrid) newGrid();
+    if(!curGrid){ sectionHead(); newGrid() }
     buf+=figHTML(x,i);
   }
   if(buf&&curGrid) curGrid.insertAdjacentHTML('beforeend',buf);
@@ -903,14 +907,12 @@ function shuffleView(){
     var j=Math.floor(Math.random()*(i+1)), t=view[i]; view[i]=view[j]; view[j]=t;
   }
 }
-/* Browse Inspire Me rolls the unlocked dropdowns onto a random valid combination,
-   the same idea as on Personalise, so the settings always describe what is shown. */
 document.getElementById('shuffle-order').addEventListener('click',function(){
   if(curTab==='vis'){ inspireLayout(); return }
   var pool=[], j, t;
   for(j=0;j<DATA.n;j++){
     t=DATA.K[j];
-    if(filterLock.c && sel.c.value!=='any' && DATA.A[t]<+sel.c.value) continue;
+    if(DATA.A[t] < ((filterLock.c && sel.c.value!=='any') ? +sel.c.value : 1)) continue;
     if(filterLock.b && sel.b.value!=='any' && DATA.B[t]!==+sel.b.value) continue;
     if(filterLock.d && sel.d.value!=='any' && DATA.D[t]!==+sel.d.value) continue;
     if(filterLock.e && sel.e.value!=='any' && DATA.E[t]!==+sel.e.value) continue;
@@ -918,7 +920,9 @@ document.getElementById('shuffle-order').addEventListener('click',function(){
   }
   if(!pool.length) return;
   var seed=DATA.K[pool[Math.floor(Math.random()*pool.length)]];
-  var want={c:String(DATA.A[seed]),b:String(DATA.B[seed]),
+  var singles=DATA.A[seed];
+  var cardCount=Math.max(1, singles - ((singles>1 && Math.random()<0.5) ? 1 : 0));
+  var want={c:String(cardCount),b:String(DATA.B[seed]),
             d:String(DATA.D[seed]),e:String(DATA.E[seed])};
   ['c','b','d','e'].forEach(function(k){ if(!filterLock[k]) sel[k].value='any' });
   applyFilters();
@@ -971,7 +975,6 @@ document.getElementById('results').addEventListener('keydown',function(ev){
 
 function drawFooter(){}
 
-/* ================= tabs ================= */
 var curTab='browse';
 var TABS={browse:{panel:'p-browse',btn:'tab-browse',hash:'#browse'},
           vis:{panel:'p-vis',btn:'tab-vis',hash:'#personalise'}};
@@ -1005,14 +1008,10 @@ document.getElementById('v-back').addEventListener('click',function(){
   showTab('browse',true,true);
 });
 
-/* ================= visualiser ================= */
-
 function currentItem(){ return viewN ? viewItem(Math.min(vIndex,viewN-1)) : null; }
 function syncStageNav(){ if(vIndex>=viewN) vIndex=0; }
 function byId(id){for(var i=0;i<images.length;i++) if(images[i].id===id) return images[i]; return null}
 
-/* The stage keeps its own editable copy of the layout, so pockets can be merged
-   and unmerged without being tied to a catalogued arrangement. */
 function piecesFromItem(item){
   return pieceInfo(item).map(function(q){return {r:q.r,c:q.c,h:q.h,w:q.w}});
 }
@@ -1025,9 +1024,6 @@ function setStage(item){
   edited=false; selSlots=[]; showCustom=true;
 }
 
-/* Move each placed image to the closest equivalent pocket: same position and size
-   first, then any free pocket of the same size, then any free pocket of the same
-   kind. Anything with nowhere to go leaves the page but stays in the tray. */
 function remapPieces(op,np,old){
   var out={}, usedOld={}, taken={}, i, j;
   for(i=0;i<np.length;i++){
@@ -1065,7 +1061,6 @@ function stageStats(){
   return st;
 }
 
-/* Rebuild the piece list in reading order and re-key the placed images to match. */
 function commitPieces(list){
   list.sort(function(x,y){return (x.p.r-y.p.r)||(x.p.c-y.p.c)});
   stagePieces=list.map(function(o){return o.p});
@@ -1073,10 +1068,17 @@ function commitPieces(list){
   list.forEach(function(o,i){ if(o.a!=null) assign[i]=o.a });
 }
 
-/* After an edit, see whether the result is a catalogued layout so the counter and
-   the layout arrows stay in step. */
-/* After a merge or unmerge the page no longer matches the filters, which is why a
-   following shuffle found nothing. Move the filters onto the new mix. */
+function setFiltersFor(st,cardValue){
+  var wasEdited=edited;
+  edited=true;
+  for(var k in sel) if(!filterLock[k]) sel[k].value='any';
+  applyFilters();
+  if(!filterLock.b){ sel.b.value=String(st.b); applyFilters() }
+  if(!filterLock.d){ sel.d.value=String(st.d); applyFilters() }
+  if(!filterLock.e){ sel.e.value=String(st.e); applyFilters() }
+  if(!filterLock.c){ sel.c.value=String(cardValue); applyFilters() }
+  edited=wasEdited;
+}
 function syncFiltersToStage(){
   var st=stageStats(), wasEdited=edited;
   edited=true;
@@ -1135,10 +1137,11 @@ function drawStage(){
           (lk?' locked':'')+(selSlots.indexOf(i)>=0?' sel':'')+'" data-s="'+i+'" tabindex="0"'+
           ((img&&!lk&&!adjustMode)?' draggable="true"':'')+' style="'+style+'">'+
           '<span class="tag">'+q.h+'\u00d7'+q.w+'</span>'+
-          (lk?'<svg class="lockmark" viewBox="0 0 24 24" aria-label="Locked" role="img">'+
+          (lk?'<button class="lockmark" type="button" data-unlock="'+i+'" aria-label="Unlock this pocket">'+
+              '<svg viewBox="0 0 24 24" aria-hidden="true">'+
               '<path d="M8 11V7.5a4 4 0 0 1 8 0V11" fill="none" stroke="currentColor" '+
               'stroke-width="2.6" stroke-linecap="round"/>'+
-              '<rect x="4.5" y="10.5" width="15" height="9.5" rx="2"/></svg>':'')+
+              '<rect x="4.5" y="10.5" width="15" height="9.5" rx="2"/></svg></button>':'')+
           '<button class="clear" type="button" data-clear="'+i+'" aria-label="Clear pocket">\u00d7</button></div>';
   }
   host.innerHTML=html+'</div>';
@@ -1153,7 +1156,6 @@ function drawStage(){
   nEl.style.color=stageNote?'var(--warn)':'';
 }
 
-/* ---- selection, merging, unmerging ---- */
 function mergeTarget(){
   if(!stagePieces||selSlots.length<2) return null;
   var cells=[], ok=true;
@@ -1173,7 +1175,6 @@ function mergeTarget(){
   if(W===2&&minC<=F.seam&&minC+W-1>=F.seam+1) return null;
   return {r:minR,c:minC,h:H,w:W};
 }
-/* Lock and unlock work on the current selection, alongside the other actions. */
 function lockState(){
   if(!selSlots.length||!stagePieces) return null;
   var anyLocked=false, anyUnlocked=false;
@@ -1192,7 +1193,7 @@ function setLock(on){
       if(assign[i].id==null) delete assign[i]; else assign[i].lock=false;
     }
   });
-  stageNote=''; drawStage();
+  selSlots=[]; stageNote=''; drawStage();
 }
 function canUnmerge(){
   if(selSlots.length!==1) return false;
@@ -1226,8 +1227,6 @@ document.getElementById('file-slot').addEventListener('change',function(){
   addFiles(this.files,pendingSlots);
   pendingSlots=[]; selSlots=[]; this.value='';
 });
-/* With one pocket selected, offer the images already added so they can be reused
-   without scrolling down to the tray. */
 function drawPick(){
   var host=document.getElementById('slot-pick');
   if(selSlots.length!==1||!images.length){ host.hidden=true; host.innerHTML=''; return }
@@ -1255,8 +1254,8 @@ function drawActions(){
   if(canUnmerge()) h+='<button class="btn hv-orange" id="a-unmerge" type="button">Unmerge</button>';
   h+='<button class="btn hv-navy" id="a-addimg" type="button">Add Image</button>';
   var lk=lockState();
-  if(lk&&lk.toLock) h+='<button class="btn hv-neon" id="a-lock" type="button">Lock</button>';
-  if(lk&&lk.toUnlock) h+='<button class="btn hv-neon" id="a-unlock" type="button">Unlock</button>';
+  if(lk&&lk.toLock) h+='<button class="btn hv-orange" id="a-lock" type="button">Lock</button>';
+  if(lk&&lk.toUnlock) h+='<button class="btn hv-orange" id="a-unlock" type="button">Unlock</button>';
   h+='<button class="btn hv-coffee" id="a-none" type="button">Deselect</button>';
   host.innerHTML=h;
   var m=document.getElementById('a-merge'); if(m) m.addEventListener('click',doMerge);
@@ -1271,8 +1270,6 @@ function drawActions(){
   document.getElementById('a-none').addEventListener('click',function(){selSlots=[];drawStage()});
 }
 
-/* Dragging one pocket onto another moves the images only. Sizes need not match
-   and the pockets keep their own card/art designation. */
 function moveBetweenSlots(a,b){
   if(!stagePieces||a===b) return false;
   if((assign[a]&&assign[a].lock)||(assign[b]&&assign[b].lock)) return false;
@@ -1283,6 +1280,16 @@ function moveBetweenSlots(a,b){
 }
 
 document.getElementById('stage-page').addEventListener('click',function(ev){
+  var ul=ev.target.closest('[data-unlock]');
+  if(ul){
+    var ui=+ul.dataset.unlock;
+    if(assign[ui]){
+      pushUndo();
+      if(assign[ui].id==null) delete assign[ui]; else assign[ui].lock=false;
+      selSlots=[]; drawStage();
+    }
+    return;
+  }
   var cl=ev.target.closest('[data-clear]');
   if(cl){delete assign[+cl.dataset.clear]; selSlots=[]; drawStage(); return}
   var s=ev.target.closest('.slot'); if(!s) return;
@@ -1325,10 +1332,6 @@ document.getElementById('stage-page').addEventListener('drop',function(ev){
   selSlots=[]; drawStage();
 });
 
-/* ---- favourites and recently opened layouts ----
-   Kept in localStorage where it is available. Some browsers block storage for a
-   page embedded in another site, so every call is guarded and simply falls back
-   to remembering things for the current visit only. */
 var STORE={fav:[],recent:[]}, FAV_MAX=40, RECENT_MAX=18;
 function loadStore(){
   try{
@@ -1355,8 +1358,21 @@ function recordRecent(item){
   saveStore(); drawSaved();
 }
 function isFav(item){ return !!item && STORE.fav.indexOf(keyOf(item))>=0 }
+function stageTiling(){
+  if(!stagePieces||!CACHE[stageFmtKey]) return -1;
+  var til=CACHE[stageFmtKey].tilings;
+  var key=stagePieces.map(function(q){return q.r+','+q.c+','+q.h+','+q.w}).join('|');
+  for(var i=0;i<til.length;i++){
+    if(til[i].map(function(q){return q[0]+','+q[1]+','+q[2]+','+q[3]}).join('|')===key) return i;
+  }
+  return -1;
+}
+function stageFavItem(){
+  var t=stageTiling();
+  return t<0?null:itemFromT(stageFmtKey,t);
+}
 function toggleFav(){
-  var item=(!edited&&stageItem)?stageItem:null;
+  var item=stageFavItem();
   if(!item) return;
   var k=keyOf(item), at=STORE.fav.indexOf(k);
   if(at>=0) STORE.fav.splice(at,1);
@@ -1364,7 +1380,7 @@ function toggleFav(){
   saveStore(); drawSaved(); drawFavBtn();
 }
 function drawFavBtn(){
-  var b=document.getElementById('v-fav'), item=(!edited&&stageItem)?stageItem:null;
+  var b=document.getElementById('v-fav'), item=stageFavItem();
   b.disabled=!item;
   b.innerHTML=(item&&isFav(item))?'\u2605 Favourited':'\u2606 Favourite';
 }
@@ -1382,11 +1398,10 @@ function drawSaved(){
   document.getElementById('fav-list').innerHTML=fh||'<span class="none">No favourites yet.</span>';
   document.getElementById('recent-list').innerHTML=rh||'<span class="none">Nothing opened yet.</span>';
 }
-/* Clearing the filters guarantees the saved layout is reachable again. */
 function loadLayoutKey(k){
   var item=itemFromKey(k); if(!item) return;
   pushUndo();
-  edited=true;                    /* hold the page steady while the filters reopen */
+  edited=true;
   if(item.f!==fmt){
     fmt=item.f; document.getElementById('f-format').value=fmt;
     DATA=buildFormat(fmt); view=new Int32Array(0); drawFooter();
@@ -1399,11 +1414,16 @@ function loadLayoutKey(k){
       vIndex=i; edited=false; drawStage(); recordRecent(viewItem(i)); return;
     }
   }
+  var raw=CACHE[item.f].tilings[item.t];
+  if(raw){
+    var np=raw.map(function(q){return {r:q[0],c:q[1],h:q[2],w:q[3]}});
+    if(stagePieces) assign=remapPieces(stagePieces,np,assign);
+    stagePieces=np; stageFmtKey=item.f; stageSig=null;
+    edited=true; showCustom=false; selSlots=[];
+    drawStage(); recordRecent(item); return;
+  }
   edited=false; drawStage();
 }
-/* Mirror flips the layout left to right. On a 9 pocket page the stitching is off
-   centre, so the mirror belongs to the opposite page and the format switches with
-   it. On 12 and 16 pocket pages the mirror stays in the same format. */
 document.getElementById('v-mirror').addEventListener('click',function(){
   if(!stagePieces) return;
   pushUndo();
@@ -1434,9 +1454,6 @@ document.getElementById('v-fav').addEventListener('click',toggleFav);
   });
 });
 
-/* A locked pocket pins its position, size and kind. Stepping or shuffling only
-   moves to layouts that still contain every locked pocket exactly, so the pocket
-   and whatever is in it stay put. */
 function lockedPieces(){
   var out=[];
   if(!stagePieces) return out;
@@ -1456,7 +1473,6 @@ function itemKeepsLocks(item,locks){
   }
   return true;
 }
-/* One step of history, so an unwanted shuffle or mirror can be undone. */
 var undoStack=[], UNDO_MAX=20;
 function snapshot(){
   return {vIndex:vIndex, fmt:fmt, stageFmtKey:stageFmtKey, edited:edited, showCustom:showCustom,
@@ -1476,7 +1492,7 @@ function drawUndoBtn(){
 }
 document.getElementById('v-undo').addEventListener('click',function(){
   var snap=undoStack.pop(); if(!snap) return;
-  edited=true;                      /* protect the page while the filters reset */
+  edited=true;
   if(snap.fmt!==fmt){
     fmt=snap.fmt; document.getElementById('f-format').value=fmt;
     DATA=buildFormat(fmt); view=new Int32Array(0);
@@ -1497,9 +1513,6 @@ function placedCount(){
   var n=0; for(var k in assign) if(assign[k]&&assign[k].id!=null) n++;
   return n;
 }
-/* Once images are on the page, shuffling only moves to layouts with the same mix:
-   the same number of cards and of each insert size. Every image then has a pocket
-   of its own size waiting for it, so nothing is dropped. */
 function newLayout(){
   if(!viewN) return;
   pushUndo();
@@ -1530,9 +1543,6 @@ function newLayout(){
   }
   edited=false; vIndex=pick; stageNote=''; drawStage();
 }
-/* Adjust Crop: drag inside a pocket to slide the image within it. Only meaningful
-   when the image overflows the pocket, which is what "Crop to Fill" does. The
-   offset is stored per placement and travels with the image. */
 var adjustMode=false, pan=null;
 document.getElementById('v-adjust').addEventListener('click',function(){
   adjustMode=!adjustMode;
@@ -1583,13 +1593,10 @@ document.getElementById('v-fit').addEventListener('change',function(){
 
 document.getElementById('v-shuffle').addEventListener('click',newLayout);
 
-/* Inspire Me on Personalise goes further: it opens the filters up and lands on a
-   layout with a different mix entirely, then moves the filters onto that mix so a
-   following Shuffle stays within it. */
 function inspireLayout(){
   if(!viewN&&!stagePieces) return;
-  pushUndo();                       /* snapshot first, so undo restores the filters */
-  edited=true;                      /* keep applyFilters from resetting the page */
+  pushUndo();
+  edited=true;
   for(var k in sel) if(!filterLock[k]) sel[k].value='any';
   applyFilters();
   if(!viewN) return;
@@ -1613,12 +1620,13 @@ function inspireLayout(){
     drawStage(); return;
   }
   edited=false; vIndex=pick; stageNote=''; drawStage();
-  syncFiltersToStage();
-  relocateAfterEdit();            /* keep vIndex pointing at the layout on screen */
+  var st=stageStats();
+  var cardCount=Math.max(1, st.a - ((st.a>1 && Math.random()<0.5) ? 1 : 0));
+  setFiltersFor(st,cardCount);
+  relocateAfterEdit();
   drawStage();
 }
 
-/* uploads */
 var drop=document.getElementById('drop'), fileInput=document.getElementById('file');
 drop.addEventListener('click',function(){fileInput.click()});
 drop.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();fileInput.click()}});
@@ -1629,8 +1637,6 @@ fileInput.addEventListener('change',function(){addFiles(this.files); this.value=
   drop.addEventListener(t,function(e){e.preventDefault();drop.classList.remove('hot')})});
 drop.addEventListener('drop',function(e){ if(e.dataTransfer.files.length) addFiles(e.dataTransfer.files) });
 
-/* targets is an optional list of pocket indexes; each image loaded drops into the
-   next one, which is how the Add image button works on a phone. */
 function addFiles(list,targets){
   var queue=(targets||[]).slice();
   for(var i=0;i<list.length;i++){
@@ -1654,7 +1660,6 @@ function fillSlot(i,id){
   return true;
 }
 function releaseImage(im){ try{ URL.revokeObjectURL(im.url) }catch(e){} }
-/* Losing an image empties its pocket, but a locked pocket keeps its lock. */
 function detachImage(id){
   for(var k in assign){
     if(assign[k]&&assign[k].id===id){
@@ -1705,15 +1710,36 @@ document.getElementById('tray').addEventListener('dragstart',function(ev){
   ev.dataTransfer.setData('text/plain',c.dataset.id);
 });
 
-/* Brand marks for exports. Both are optional: if the file is missing the export
-   simply goes out without it rather than failing. */
 var brandImg=new Image(), markImg=new Image();
 var brandReady=false, markReady=false;
-brandImg.onload=function(){brandReady=true}; brandImg.src='export-logo.png';
-markImg.onload=function(){markReady=true};  markImg.src='watermark.png';
+function loadBrand(url,img,done){
+  function direct(){ img.onload=function(){done(true)}; img.onerror=function(){done(false)}; img.src=url }
+  if(typeof fetch!=='function'){ direct(); return }
+  fetch(url).then(function(r){ if(!r.ok) throw 0; return r.blob() })
+    .then(function(b){
+      img.onload=function(){done(true)};
+      img.onerror=function(){done(false)};
+      img.src=URL.createObjectURL(b);
+    })['catch'](function(){ direct() });
+}
+loadBrand('export-logo.png',brandImg,function(okState){ brandReady=okState });
+loadBrand('watermark.png',markImg,function(okState){ markReady=okState });
+
+function saveBlob(blob,name){
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=name;
+  a.style.display='none';
+  if(document.body) document.body.appendChild(a);
+  a.click();
+  setTimeout(function(){
+    URL.revokeObjectURL(a.href);
+    if(a.parentNode) a.parentNode.removeChild(a);
+  },2000);
+}
 
 function stampWatermark(ctx,cw,ch){
-  if(!markReady||!markImg.naturalWidth) return;
+  if(!markReady||!markImg.naturalWidth||!markImg.naturalHeight) return;
   var sc=Math.min(cw/markImg.naturalWidth, ch/markImg.naturalHeight)*0.92;
   var w=markImg.naturalWidth*sc, h=markImg.naturalHeight*sc;
   ctx.save(); ctx.globalAlpha=0.20;
@@ -1728,9 +1754,6 @@ function stampLogo(ctx,cw,ch){
   ctx.restore();
 }
 
-/* PNG export, sized so every 1x1 pocket prints at exactly 63 x 88 mm.
-   Dimensions are held in millimetres and converted at the chosen resolution,
-   and a pHYs chunk is written into the file so print software honours it. */
 var MM={W:63,H:88,G:2,GU:6,RG:3,P:6};
 function rrect(ctx,x,y,w,h,r){
   ctx.beginPath();
@@ -1755,16 +1778,11 @@ function withDensity(buf,ppm){
   out.set(src.subarray(0,at),0); out.set(chunk,at); out.set(src.subarray(at),at+21);
   return out;
 }
-/* ---- print at true size ----
-   Every pocket is emitted as its own tile, so nothing is ever cut across a sheet.
-   A pair stacked vertically crosses the binder's row stitching and so becomes two
-   separate pieces, which is how the insert is physically made anyway. */
 var SHEETS={a4:{w:210,h:297,label:'A4',css:'A4'},
             letter:{w:215.9,h:279.4,label:'US Letter',css:'Letter'}};
 var PMARGIN=10, PGAP=4, INSERT={w:68,h:94,bridge:4};
-/* fill and edge colours by insert size */
-var SIZECOL={'11':['#303994','#1c2263'],'12':['#709fdb','#3a6ba8'],
-             '21':['#93c5ec','#4e8ab8'],'22':['#a9d6f3','#5f9cc4']};
+var SIZECOL={'11':['#003ca6','#002a75'],'12':['#e2ab2d','#8a6410'],
+             '21':['#e2ab2d','#c08f1c'],'22':['#eddbbe','#b9a684']};
 function colOf(q){ return SIZECOL[''+q.h+q.w]||SIZECOL['11'] }
 
 function drawFit(ctx,el,fit,x,y,w,h,fx,fy){
@@ -1789,7 +1807,9 @@ function printTiles(){
     var cw=px(W), ch=px(Hf);
     var cv=document.createElement('canvas'); cv.width=cw; cv.height=ch;
     var ctx=cv.getContext('2d');
-    ctx.fillStyle=colOf(q)[0]; ctx.fillRect(0,0,cw,ch);
+    if(!(im&&im.el.naturalWidth&&a.fit==='contain')){
+      ctx.fillStyle=colOf(q)[0]; ctx.fillRect(0,0,cw,ch);
+    }
     if(im&&im.el.naturalWidth) drawFit(ctx,im.el,a.fit,0,0,cw,ch,(a.px==null?50:a.px)/100,(a.py==null?50:a.py)/100);
     var th=Math.round(ch/rows);
     for(var t=0;t<rows;t++){
@@ -1825,15 +1845,12 @@ function doPrint(key){
             'mm;height:'+it.t.h+'mm"><img src="'+it.t.url+'" alt=""><span class="pcut"></span>'+
             '<b>'+it.t.w+'\u00d7'+it.t.h+'mm</b></div>';
     }
-    html+='<img class="psheet-mark" src="watermark.png" alt="" onerror="this.remove()">'+
-          '<img class="psheet-logo" src="export-logo.png" alt="" onerror="this.remove()"></div>';
+    html+='<img class="psheet-logo" src="export-logo.png" alt="" onerror="this.remove()"></div>';
   }
   document.getElementById('print-style').textContent=
     '@page{size:'+S.css+';margin:'+PMARGIN+'mm}';
   var root=document.getElementById('print-root');
   root.innerHTML=html;
-  /* The tiles are data URLs and still decode asynchronously, so the first print
-     used to go out with empty frames. Wait for them before opening the dialog. */
   var imgs=root.querySelectorAll?root.querySelectorAll('img'):[];
   var left=imgs.length, fired=false;
   function go(){ if(fired) return; fired=true; window.print() }
@@ -1847,27 +1864,24 @@ function doPrint(key){
 document.getElementById('v-print-a4').addEventListener('click',function(){doPrint('a4')});
 document.getElementById('v-print-letter').addEventListener('click',function(){doPrint('letter')});
 
-document.getElementById('v-png').addEventListener('click',function(){
-  if(!stagePieces||!stagePieces.length) return;
-  var dpi=150;                    /* PNG is for sharing, so keep the file light */
+function paintLayout(ctx,dpi,brand){
   var px=function(mm){return Math.round(mm*dpi/25.4)};
   var W=px(MM.W),H=px(MM.H),G=px(MM.G),GU=px(MM.GU),RG=px(MM.RG),P=px(MM.P);
   var F=FORMATS[stageFmtKey], COLS=F.cols, ROWS=F.rows, SEAM=F.seam;
   var cw=2*P+COLS*W+(COLS-1)*G+GU, ch=2*P+ROWS*H+(ROWS-1)*RG;
-  var cv=document.createElement('canvas'); cv.width=cw; cv.height=ch;
-  var ctx=cv.getContext('2d');
-  ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,cw,ch);
-
   function colX(c){return P + c*(W+G) + (c>SEAM?GU:0)}
   function rowY(r){return P + r*(H+RG)}
   var edge=Math.max(1,Math.round(dpi/150)), radius=px(1.5);
+
+  ctx.clearRect(0,0,cw,ch);
+  ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,cw,ch);
 
   ctx.save(); ctx.setLineDash([px(1.5),px(1.5)]); ctx.strokeStyle='#9aa3ac'; ctx.lineWidth=edge;
   var sx=colX(SEAM)+W+G/2+GU/2;
   ctx.beginPath(); ctx.moveTo(sx,P); ctx.lineTo(sx,ch-P); ctx.stroke();
   for(var r=1;r<ROWS;r++){
-    var y=rowY(r)-RG/2;
-    ctx.beginPath(); ctx.moveTo(P,y); ctx.lineTo(cw-P,y); ctx.stroke();
+    var yy=rowY(r)-RG/2;
+    ctx.beginPath(); ctx.moveTo(P,yy); ctx.lineTo(cw-P,yy); ctx.stroke();
   }
   ctx.restore();
 
@@ -1875,33 +1889,59 @@ document.getElementById('v-png').addEventListener('click',function(){
     var q=stagePieces[i];
     var x=colX(q.c), y=rowY(q.r);
     var w=q.w*W+(q.w-1)*G, h=q.h*H+(q.h-1)*RG;
-    var a=assign[i], im=a?byId(a.id):null;
+    var a=assign[i], im=(a&&a.id!=null)?byId(a.id):null;
+    var hasImg=!!(im&&im.el.naturalWidth);
     ctx.save(); rrect(ctx,x,y,w,h,radius); ctx.clip();
-    ctx.fillStyle=colOf(q)[0]; ctx.fillRect(x,y,w,h);
-    if(im&&im.el.naturalWidth) drawFit(ctx,im.el,a.fit,x,y,w,h,(a.px==null?50:a.px)/100,(a.py==null?50:a.py)/100);
+    if(!(hasImg&&a.fit==='contain')){ ctx.fillStyle=colOf(q)[0]; ctx.fillRect(x,y,w,h) }
+    if(hasImg) drawFit(ctx,im.el,a.fit,x,y,w,h,(a.px==null?50:a.px)/100,(a.py==null?50:a.py)/100);
     ctx.restore();
     ctx.strokeStyle=colOf(q)[1]; ctx.lineWidth=edge;
     rrect(ctx,x,y,w,h,radius); ctx.stroke();
   }
 
-  stampWatermark(ctx,cw,ch);
-  stampLogo(ctx,cw,ch);
+  if(brand){ stampWatermark(ctx,cw,ch); stampLogo(ctx,cw,ch) }
+  return {w:cw,h:ch};
+}
 
-  var st=stageStats();
-  cv.toBlob(function(blob){
+document.getElementById('v-png').addEventListener('click',function(){
+  if(!stagePieces||!stagePieces.length) return;
+  var dpi=150, name='thebinderstudio-'+stageFmtKey+'.png';
+
+  function build(brand){
+    var probe=paintLayout(document.createElement('canvas').getContext('2d'),dpi,false);
+    var c=document.createElement('canvas'); c.width=probe.w; c.height=probe.h;
+    paintLayout(c.getContext('2d'),dpi,brand);
+    return c;
+  }
+  function withPpi(blob){
+    if(!blob) return false;
+    if(!blob.arrayBuffer){ saveBlob(blob,name); return true }
     blob.arrayBuffer().then(function(buf){
-      var ppm=Math.round(dpi/0.0254);
-      var out=new Blob([withDensity(buf,ppm)],{type:'image/png'});
-      var a=document.createElement('a');
-      a.href=URL.createObjectURL(out);
-      a.download='thebinderstudio-'+stageFmtKey+'.png';
-      a.click();
-      setTimeout(function(){URL.revokeObjectURL(a.href)},2000);
-    });
-  },'image/png');
+      try{ saveBlob(new Blob([withDensity(buf,Math.round(dpi/0.0254))],{type:'image/png'}),name) }
+      catch(e){ saveBlob(blob,name) }
+    })['catch'](function(){ saveBlob(blob,name) });
+    return true;
+  }
+  function emit(c,onFail){
+    try{
+      if(c.toBlob){ c.toBlob(function(b){ if(!b&&onFail) onFail(); else withPpi(b) },'image/png') }
+      else saveBlob(dataUrlToBlob(c.toDataURL('image/png')),name);
+    }catch(e){ if(onFail) onFail() }
+  }
+  emit(build(true),function(){ emit(build(false)) });
 });
+function dataUrlToBlob(url){
+  var parts=url.split(','), bin=atob(parts[1]), n=bin.length, arr=new Uint8Array(n);
+  while(n--) arr[n]=bin.charCodeAt(n);
+  return new Blob([arr],{type:'image/png'});
+}
 
-/* ================= init ================= */
+document.addEventListener('contextmenu',function(ev){ ev.preventDefault() });
+document.addEventListener('keydown',function(ev){
+  if((ev.ctrlKey||ev.metaKey) && (ev.key==='c'||ev.key==='C')) ev.preventDefault();
+});
+document.addEventListener('copy',function(ev){ ev.preventDefault() });
+
 try{ history.replaceState({tab:location.hash==='#personalise'?'vis':'browse'},'',location.hash||'#browse') }catch(e){}
 document.getElementById('f-format').value=fmt;
 for(var kk in sel) sel[kk].value='any';
@@ -1920,6 +1960,6 @@ if(location.hash==='#personalise') showTab('vis',false);
 <div id="print-root" aria-hidden="true"></div>
 <style id="print-style"></style>
 
-<script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="silphfolio" data-description="Support me on Buy me a coffee!" data-message="" data-color="#F9982F" data-position="Right" data-x_margin="34" data-y_margin="34"></script>
+<script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="silphfolio" data-description="Support me on Buy me a coffee!" data-message="" data-color="#ff5f5f" data-position="Right" data-x_margin="34" data-y_margin="34"></script>
 </body>
 </html>
