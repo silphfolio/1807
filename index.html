@@ -471,7 +471,7 @@ footer{color:var(--ink-3);font-size:12.5px;padding:0 0 50px}
           <dt>Lock a pocket</dt>
           <dd>Select one or more pockets and press Lock. A padlock appears on them, and they are pinned in place. Shuffle then only moves to layouts that still contain that exact pocket, so it and whatever is in it stay exactly where they are while everything around them changes. Locked pockets also cannot be overwritten, swapped or emptied, and they survive “Reset Layout”. You can lock an empty pocket too, to hold its position while you fill the rest. Tap the padlock again to unlock.</dd>
           <dt>Shuffle</dt>
-          <dd>Moves to another layout with the same number of cards and inserts. Tap “Inspire Me” for a completely different layout.</dd>
+          <dd>Moves to another layout with the same number of cards and inserts, and moves your images between pockets of the same size. Pockets of one size still get reshuffled even when the layout itself cannot change. Locked pockets stay where they are. Tap “Inspire Me” for a completely different layout.</dd>
           <dt>Reset Layout</dt>
           <dd>Empties every unlocked pocket at once, keeping your images in the tray.</dd>
           <dt>Undo</dt>
@@ -1514,35 +1514,80 @@ function placedCount(){
   var n=0; for(var k in assign) if(assign[k]&&assign[k].id!=null) n++;
   return n;
 }
+function tilingKeepsLocks(t,locks){
+  if(!locks.length) return true;
+  var p=CACHE[stageFmtKey].tilings[t], i, l, found;
+  for(l=0;l<locks.length;l++){
+    found=false;
+    for(i=0;i<p.length;i++){
+      if(p[i][0]===locks[l].r&&p[i][1]===locks[l].c&&
+         p[i][2]===locks[l].h&&p[i][3]===locks[l].w){ found=true; break }
+    }
+    if(!found) return false;
+  }
+  return true;
+}
+function applyTiling(t){
+  var np=CACHE[stageFmtKey].tilings[t].map(function(q){
+    return {r:q[0],c:q[1],h:q[2],w:q[3]};
+  });
+  if(stagePieces) assign=remapPieces(stagePieces,np,assign);
+  stagePieces=np; stageSig=null; selSlots=[];
+  relocateAfterEdit();
+  showCustom=false;
+}
+function shuffleImagesInPlace(){
+  if(!stagePieces) return false;
+  var groups={}, i, k, moved=false;
+  for(i=0;i<stagePieces.length;i++){
+    if(assign[i]&&assign[i].lock) continue;
+    k=stagePieces[i].h+'x'+stagePieces[i].w;
+    (groups[k]=groups[k]||[]).push(i);
+  }
+  Object.keys(groups).forEach(function(g){
+    var idx=groups[g];
+    if(idx.length<2) return;
+    var vals=idx.map(function(j){return assign[j]||null});
+    var filled=0, distinct=false, n;
+    for(n=0;n<vals.length;n++) if(vals[n]&&vals[n].id!=null) filled++;
+    for(n=1;n<vals.length;n++) if((vals[n]&&vals[n].id)!==(vals[0]&&vals[0].id)) distinct=true;
+    if(!filled||!distinct) return;
+    var before=vals.slice(), tries=0, j, r, t, same;
+    do{
+      for(j=vals.length-1;j>0;j--){ r=Math.floor(Math.random()*(j+1)); t=vals[j]; vals[j]=vals[r]; vals[r]=t }
+      same=true;
+      for(n=0;n<vals.length;n++) if(vals[n]!==before[n]){ same=false; break }
+      tries++;
+    } while(same && tries<12);
+    if(same) return;
+    idx.forEach(function(j,pos){
+      if(vals[pos]!=null) assign[j]=vals[pos]; else delete assign[j];
+    });
+    moved=true;
+  });
+  return moved;
+}
 function newLayout(){
-  if(!viewN) return;
+  if(!stagePieces) return;
   pushUndo();
-  var locks=lockedPieces();
-  var keep=stagePieces?stageStats():null;
-  function ok(i){
-    if(i===vIndex) return false;
-    var t=DATA.K[view[i]];
-    if(keep && (DATA.A[t]!==keep.a||DATA.B[t]!==keep.b||
-                DATA.D[t]!==keep.d||DATA.E[t]!==keep.e)) return false;
-    if(locks.length && !itemKeepsLocks(viewItem(i),locks)) return false;
-    return true;
+  var Dt=CACHE[stageFmtKey], locks=lockedPieces(), keep=stageStats();
+  var curT=stageTiling(), pool=[], t;
+  for(t=0;t<Dt.tilings.length;t++){
+    if(t===curT) continue;
+    if(Dt.A[t]!==keep.a||Dt.B[t]!==keep.b||Dt.D[t]!==keep.d||Dt.E[t]!==keep.e) continue;
+    if(!tilingKeepsLocks(t,locks)) continue;
+    pool.push(t);
   }
-  var pick=-1, i;
-  for(var probe=0;probe<800&&pick<0;probe++){
-    i=Math.floor(Math.random()*viewN);
-    if(ok(i)) pick=i;
-  }
-  if(pick<0){                       // sparse match: one sweep, reservoir sampled
-    var seen=0;
-    for(i=0;i<viewN;i++) if(ok(i)){ seen++; if(Math.random()<1/seen) pick=i }
-  }
-  if(pick<0){
-    stageNote = keep
-      ? 'No other layout in this filter has the same mix of cards and inserts. Clear slots, or widen the filters.'
-      : 'No other layout in this filter keeps every locked pocket. Unlock one, or widen the filters.';
+  if(!pool.length){
+    if(shuffleImagesInPlace()){ stageNote=''; drawStage(); return }
+    stageNote = locks.length
+      ? 'No other layout with this mix keeps every locked pocket. Unlock one to see more.'
+      : 'No other arrangement is possible with this mix and these images.';
     drawStage(); return;
   }
-  edited=false; vIndex=pick; stageNote=''; drawStage();
+  applyTiling(pool[Math.floor(Math.random()*pool.length)]);
+  shuffleImagesInPlace();
+  stageNote=''; drawStage();
 }
 var adjustMode=false, pan=null;
 document.getElementById('v-adjust').addEventListener('click',function(){
@@ -1595,37 +1640,34 @@ document.getElementById('v-fit').addEventListener('change',function(){
 document.getElementById('v-shuffle').addEventListener('click',newLayout);
 
 function inspireLayout(){
-  if(!viewN&&!stagePieces) return;
+  if(!stagePieces) return;
   pushUndo();
-  edited=true;
-  for(var k in sel) if(!filterLock[k]) sel[k].value='any';
-  applyFilters();
-  if(!viewN) return;
-  var locks=lockedPieces(), cur=stagePieces?stageStats():null, pick=-1, i;
-  function ok(n){
-    var t=DATA.K[view[n]];
-    if(cur && DATA.A[t]===cur.a && DATA.B[t]===cur.b &&
-              DATA.D[t]===cur.d && DATA.E[t]===cur.e) return false;
-    if(locks.length && !itemKeepsLocks(viewItem(n),locks)) return false;
-    return true;
+  var Dt=CACHE[stageFmtKey], locks=lockedPieces(), cur=stageStats();
+  var curT=stageTiling(), pool=[], t;
+  for(t=0;t<Dt.tilings.length;t++){
+    if(t===curT) continue;
+    if(Dt.A[t]<1) continue;
+    if(Dt.A[t]===cur.a&&Dt.B[t]===cur.b&&Dt.D[t]===cur.d&&Dt.E[t]===cur.e) continue;
+    if(filterLock.c && sel.c.value!=='any' && Dt.A[t]<+sel.c.value) continue;
+    if(filterLock.b && sel.b.value!=='any' && Dt.B[t]!==+sel.b.value) continue;
+    if(filterLock.d && sel.d.value!=='any' && Dt.D[t]!==+sel.d.value) continue;
+    if(filterLock.e && sel.e.value!=='any' && Dt.E[t]!==+sel.e.value) continue;
+    if(!tilingKeepsLocks(t,locks)) continue;
+    pool.push(t);
   }
-  for(var probe=0;probe<800&&pick<0;probe++){
-    i=Math.floor(Math.random()*viewN); if(ok(i)) pick=i;
-  }
-  if(pick<0){
-    var seen=0;
-    for(i=0;i<viewN;i++) if(ok(i)){ seen++; if(Math.random()<1/seen) pick=i }
-  }
-  if(pick<0){
-    stageNote='No other mix in this format keeps the locked pockets.';
+  if(!pool.length){
+    stageNote = locks.length
+      ? 'No other mix keeps every locked pocket. Unlock one to see more.'
+      : 'No other mix is available for this binder.';
     drawStage(); return;
   }
-  edited=false; vIndex=pick; stageNote=''; drawStage();
+  applyTiling(pool[Math.floor(Math.random()*pool.length)]);
   var st=stageStats();
   var cardCount=Math.max(1, st.a - ((st.a>1 && Math.random()<0.5) ? 1 : 0));
   setFiltersFor(st,cardCount);
   relocateAfterEdit();
-  drawStage();
+  showCustom=false;
+  stageNote=''; drawStage();
 }
 
 var drop=document.getElementById('drop'), fileInput=document.getElementById('file');
