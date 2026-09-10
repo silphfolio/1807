@@ -1,0 +1,29 @@
+/*
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), usb=()
+
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.png
+  Cache-Control: public, max-age=604800
+
+/*.ico
+  Cache-Control: public, max-age=604800
+
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+# A content security policy is deliberately not enabled. The Buy Me a Coffee
+# widget loads its own styles, fonts and frames from domains that are not
+# documented, so a policy written blind is likely to break it.
+#
+# To work one out safely, add the line below temporarily. Report-Only never
+# blocks anything; it just logs what would have been refused to the browser
+# console. Load the site, confirm the widget still works, and note every
+# violation. Those domains can then be added and the header switched to the
+# enforcing name.
+#
+#  Content-Security-Policy-Report-Only: default-src 'self'; img-src 'self' data: blob:; font-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self'; frame-src 'self'
